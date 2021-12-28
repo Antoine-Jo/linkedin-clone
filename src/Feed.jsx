@@ -8,47 +8,33 @@ import EventNoteIcon from '@material-ui/icons/EventNote';
 import CalendarViewDayIcon from '@material-ui/icons/CalendarViewDay';
 import Post from './Post';
 import { db } from './firebase';
-import { addDoc, collection, doc, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
 
 function Feed() {
     const [input, setInput] = useState('')
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        onSnapshot(collection(db, 'posts'), (snapshot) => {
-            // console.log(snapshot.docs.map(doc => doc.data()));
+        const collectionRef = collection(db, 'posts')
+
+        onSnapshot(query(collectionRef, orderBy("timestamp", "desc")), (snapshot) => {
             setPosts(snapshot.docs.map(doc => ({
                 id: doc.id,
                 data: doc.data()
             })))
-            // console.log(posts);
         })
-        // onSnapshot(doc(db, 'posts'), (doc) => {
-        //     setPosts(onSnapshot.docs.map(doc => ({
-        //         id: doc.id,
-        //         data: doc.data()
-        //     })))
-        //     console.log('Current data: ', doc.data());
-        // })
-        // db.collection('posts').onSnapshot(snapshot => (
-        //     setPosts(snapshot.docs.map(doc => ({
-        //         id: doc.id,
-        //         data: doc.data(),
-        //     })))
-        // ))
     }, [])
 
     const sendPost = async (e) => {
         e.preventDefault();
+        const collectionRef = collection(db, 'posts')
+        const payload = {name: 'Antoine Jonville', description: 'Ceci est un test', message: input, photoUrl: '', timestamp: serverTimestamp()}
+        await addDoc(collectionRef, payload)
+        setInput('')
+        // console.log(docRef);
 
-        const docRef = await addDoc(collection(db, 'posts'), {
-            name: 'Antoine Jonville',
-            description: 'Ceci est un test',
-            message: input,
-            photoUrl: '',
-            timestamp: serverTimestamp()
-        })
-        console.log("Document writtent with ID: ", docRef.id);
+        // const docRef = doc(db, 'posts');
+        // await setDoc(docRef, payload);
         // db.collection('posts').add({
         //     name: 'Antoine Jonville',
         //     description: 'Ceci est un test',
@@ -75,10 +61,16 @@ function Feed() {
                     <InputOption Icon={CalendarViewDayIcon} title='Rédiger un article' color="#7FC15E" />
                 </div>
             </div>
-            {posts.map((post) => (
-                <Post />
+            {posts.map(({id, data: { name, description, message, photoUrl } }) => (
+                <Post 
+                    key={id}
+                    name={name}
+                    description={description}
+                    message={message}
+                    photoUrl={photoUrl}
+                />
             ))}
-            <Post name='Antoine Jonville' description='Ceci est un test' message='WOW Ca fonctionne' />
+            {/* <Post name='Antoine Jonville' description='Ceci est un test' message='WOW Ca fonctionne' /> */}
         </div>
     )
 }
