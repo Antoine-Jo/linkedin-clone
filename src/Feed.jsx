@@ -8,30 +8,54 @@ import EventNoteIcon from '@material-ui/icons/EventNote';
 import CalendarViewDayIcon from '@material-ui/icons/CalendarViewDay';
 import Post from './Post';
 import { db } from './firebase';
+import { addDoc, collection, doc, onSnapshot, serverTimestamp } from 'firebase/firestore';
 
 function Feed() {
     const [input, setInput] = useState('')
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        db.collection('posts').onSnapshot(snapshot => (
+        onSnapshot(collection(db, 'posts'), (snapshot) => {
+            // console.log(snapshot.docs.map(doc => doc.data()));
             setPosts(snapshot.docs.map(doc => ({
                 id: doc.id,
-                data: doc.data(),
+                data: doc.data()
             })))
-        ))
+            // console.log(posts);
+        })
+        // onSnapshot(doc(db, 'posts'), (doc) => {
+        //     setPosts(onSnapshot.docs.map(doc => ({
+        //         id: doc.id,
+        //         data: doc.data()
+        //     })))
+        //     console.log('Current data: ', doc.data());
+        // })
+        // db.collection('posts').onSnapshot(snapshot => (
+        //     setPosts(snapshot.docs.map(doc => ({
+        //         id: doc.id,
+        //         data: doc.data(),
+        //     })))
+        // ))
     }, [])
 
-    const sendPost = (e) => {
+    const sendPost = async (e) => {
         e.preventDefault();
 
-        db.collection('posts').add({
+        const docRef = await addDoc(collection(db, 'posts'), {
             name: 'Antoine Jonville',
             description: 'Ceci est un test',
             message: input,
             photoUrl: '',
-            timestamp: db.FieldValue.serverTimestamp(),
-        });
+            timestamp: serverTimestamp()
+        })
+        console.log("Document writtent with ID: ", docRef.id);
+        // db.collection('posts').add({
+        //     name: 'Antoine Jonville',
+        //     description: 'Ceci est un test',
+        //     message: input,
+        //     photoUrl: '',
+        //     timestamp: db.FieldValue.serverTimestamp(),
+        // });
     }
 
     return (
