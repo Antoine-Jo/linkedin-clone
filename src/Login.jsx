@@ -3,24 +3,33 @@ import './Login.css';
 import linkedin from './linkedin.svg';
 
 function Login() {
+
+    const loginToApp = () => {
+
+    }
+
+    const register = () => {
+
+    }
+
     return (
         <div className='login'>
             <img src={linkedin} alt=''/>
 
             <form>
-                <input placeholder='Full name (required if registering)' type="text" />
+                <input placeholder='Nom complet (Obligatoire si inscription)' type="text" />
                 
-                <input placeholder='Profile pic URL (optional)' type="text" />
+                <input placeholder='Image de profil URL (optionnel)' type="text" />
                 
                 <input placeholder='Email' type="email" />
 
-                <input placeholder='Password' type="password" />
+                <input placeholder='Mot de passe' type="password" />
 
-                <button>S'identifier</button>
+                <button type='submit' onClick={loginToApp}>S'identifier</button>
             </form>
 
-            <p>Pas un membre ?
-                <span> S'inscrire maintenant</span>
+            <p>Nouveau sur LinkedIn ?{" "}
+                <span className='login__register' onClick={register}>S'inscrire maintenant</span>
             </p>
         </div>
     )
