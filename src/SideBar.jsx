@@ -2,8 +2,11 @@ import { Avatar } from '@material-ui/core';
 import React from 'react'
 import './SideBar.css';
 import PicSidebar from './bg-pic-sidebar.jpg'
+import { useSelector } from 'react-redux';
+import { selectUser } from './features/userSlice';
 
 function SideBar() {
+    const user = useSelector(selectUser);
 
     const recentItem = (topic) => (
         <div className="sidebar__recentItem">
