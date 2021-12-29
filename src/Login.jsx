@@ -4,7 +4,7 @@ import linkedin from './linkedin.svg';
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import { login } from './features/userSlice';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -23,12 +23,12 @@ function Login() {
         }
 
         createUserWithEmailAndPassword(auth, email, password)
-        // .then((userAuth) => {
-        //     userAuth.user.updateProfile({
-        //         displayName: name,
-        //         photoUrl: profilePic,
-        //     })
-            .then((userAuth) => {
+        .then((userAuth) => {
+            updateProfile(userAuth.user,{
+                displayName: name,
+                photoURL: profilePic,
+            })
+            .then(() => {
                 dispatch(login({
                     email: userAuth.user.email,
                     uid: userAuth.user.uid,
@@ -37,7 +37,7 @@ function Login() {
                 }))
             })
             .catch((error) => alert(error));
-        // })
+        })
     }
 
     return (
