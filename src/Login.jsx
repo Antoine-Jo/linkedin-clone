@@ -36,8 +36,8 @@ function Login() {
                     photoUrl: profilePic,
                 }))
             })
-            .catch((error) => alert(error));
         })
+        .catch((error) => alert(error));
     }
 
     return (
