@@ -1,3 +1,4 @@
+import { Widgets } from '@material-ui/icons';
 import { onAuthStateChanged } from 'firebase/auth';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,7 +39,7 @@ function App() {
         <div className='app__body'>
           <SideBar />
           <Feed />
-          {/* Widgets */}
+          <Widgets />
         </div>
       )}
     </div>

@@ -11,13 +11,16 @@ import { db } from './firebase';
 import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
 import { selectUser } from './features/userSlice';
+import FlipMove from 'react-flip-move';
 
 function Feed() {
     const user = useSelector(selectUser)
     const [input, setInput] = useState('')
     const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true)
         const collectionRef = collection(db, 'posts')
 
         onSnapshot(query(collectionRef, orderBy("timestamp", "desc")), (snapshot) => {
@@ -26,6 +29,7 @@ function Feed() {
                 data: doc.data()
             })))
         })
+        setLoading(false)
     }, [])
 
     const sendPost = async (e) => {
@@ -53,6 +57,8 @@ function Feed() {
                     <InputOption Icon={CalendarViewDayIcon} title='Rédiger un article' color="#7FC15E" />
                 </div>
             </div>
+
+            <FlipMove>
             {posts.map(({id, data: { name, description, message, photoUrl } }) => (
                 <Post 
                     key={id}
@@ -62,7 +68,7 @@ function Feed() {
                     photoUrl={photoUrl}
                 />
             ))}
-            {/* <Post name='Antoine Jonville' description='Ceci est un test' message='WOW Ca fonctionne' /> */}
+            </FlipMove>
         </div>
     )
 }
