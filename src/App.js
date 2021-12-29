@@ -12,6 +12,7 @@ import SideBar from './SideBar'
 function App() {
   const user = useSelector(selectUser)
   const dispatch = useDispatch();
+  console.log(user);
 
   useEffect(() => {
     onAuthStateChanged(auth, (userAuth) => {
