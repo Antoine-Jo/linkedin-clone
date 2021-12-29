@@ -2,7 +2,6 @@ import React from 'react';
 import './Header.css';
 import SearchIcon from '@material-ui/icons/Search';
 import logo from './logo-lkdin.svg';
-import picture from './pdp.jpg';
 import HeaderOption from './HeaderOption';
 import HomeIcon from '@material-ui/icons/Home';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
@@ -39,7 +38,7 @@ function Header() {
                 <HeaderOption Icon={BusinessCenterIcon} title='Emplois' />
                 <HeaderOption Icon={ChatIcon} title='Messagerie' />
                 <HeaderOption Icon={NotificationsIcon} title='Notifications' />
-                <HeaderOption avatar={picture} title='Vous' onClick={logoutOfApp}/>
+                <HeaderOption avatar={true} title='Vous' onClick={logoutOfApp}/>
            </div>
         </div>
     )

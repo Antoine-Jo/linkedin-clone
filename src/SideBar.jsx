@@ -20,9 +20,9 @@ function SideBar() {
         <div className='sidebar'>
             <div className="sidebar__top">
                 <img src={PicSidebar} alt='' />
-                <Avatar className='sidebar__avatar' />
-                <h2>Antoine Jonville</h2>
-                <h4>antoinejonville@yahoo.fr</h4>
+                <Avatar src={user.photoUrl} className='sidebar__avatar'>{user.email[0]}</Avatar>
+                <h2>{user.displayName}</h2>
+                <h4>{user.email}</h4>
             </div>
 
             <div className="sidebar__stats">

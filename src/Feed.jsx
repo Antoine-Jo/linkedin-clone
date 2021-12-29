@@ -9,8 +9,11 @@ import CalendarViewDayIcon from '@material-ui/icons/CalendarViewDay';
 import Post from './Post';
 import { db } from './firebase';
 import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import { selectUser } from './features/userSlice';
 
 function Feed() {
+    const user = useSelector(selectUser)
     const [input, setInput] = useState('')
     const [posts, setPosts] = useState([]);
 
@@ -28,20 +31,9 @@ function Feed() {
     const sendPost = async (e) => {
         e.preventDefault();
         const collectionRef = collection(db, 'posts')
-        const payload = {name: 'Antoine Jonville', description: 'Ceci est un test', message: input, photoUrl: '', timestamp: serverTimestamp()}
+        const payload = {name: user.displayName, description: user.email, message: input, photoUrl: user.photoUrl || '', timestamp: serverTimestamp()}
         await addDoc(collectionRef, payload)
         setInput('')
-        // console.log(docRef);
-
-        // const docRef = doc(db, 'posts');
-        // await setDoc(docRef, payload);
-        // db.collection('posts').add({
-        //     name: 'Antoine Jonville',
-        //     description: 'Ceci est un test',
-        //     message: input,
-        //     photoUrl: '',
-        //     timestamp: db.FieldValue.serverTimestamp(),
-        // });
     }
 
     return (
