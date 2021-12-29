@@ -2,6 +2,7 @@ import React from 'react';
 import './Widgets.css';
 import InfoIcon from '@material-ui/icons/Info';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 function Widgets() {
 
@@ -21,16 +22,16 @@ function Widgets() {
     return (
         <div className='widgets'>
             <div className="widgets__header">
-                <h2>LinkedIn News</h2>
+                <h2>LinkedIn Actualités</h2>
                 <InfoIcon />
             </div>
 
-            {newsArticle("Papa React is back", "Top news - 9099 readers")}
-            {newsArticle("Coronavirus: UK updates", "Top news - 886 readers")}
-            {newsArticle("Tesla hits new highs", "Cars & auto - 300 readers")}
-            {newsArticle("Bitcoin Breaks $22k", "Crypto - 8000 readers")}
-            {newsArticle("Is Redux to good?", "Code - 123 readers")}
-            {newsArticle("PAPA react launches course?!", "Top news - 6503 readers")}
+            {newsArticle("Covid-19/Vaccin", "À la une - 36 877 lecteurs")}
+            {newsArticle("Les 10 tendances qui marqueront 2022", "il y a 21j - 34 781 lecteurs")}
+            {newsArticle("Télétravail: halte au clichés", "il y a 28j - 700 lecteurs")}
+            {newsArticle("Ras-le-bol des professions de terrain", "il y a 2j - 2 032 lecteurs")}
+            {newsArticle("Managers: renoncer à ses idées ?", "il y a 13j - 739 lecteurss")}
+            <p className='see__more'>Voir plus <ArrowDropDownIcon /></p>
         </div>
     )
 }
